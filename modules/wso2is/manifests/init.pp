@@ -23,6 +23,7 @@ class wso2is inherits wso2base {
   $am_datasources     = hiera_hash("wso2::am_datasources")
   $bps_datasources     = hiera_hash("wso2::bps_datasources")
   $metrics_datasources = hiera_hash("wso2::metrics_datasources")
+  $usermgt = hiera_hash("wso2::usermgt")
 
   wso2base::server { "${carbon_home}" :
     maintenance_mode   => $maintenance_mode,

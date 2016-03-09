@@ -161,3 +161,12 @@ wso2::am_datasources :
     default_auto_commit: "%{hiera('wso2::datasources::common::default_auto_commit')}"
     validation_query: "%{hiera('wso2::datasources::mysql::validation_query')}"
     validation_interval: "%{hiera('wso2::datasources::common::validation_interval')}"
+
+wso2::usermgt :
+  readonly_ldap_url : ldap://puppetagent:10389
+  ad_url : ldaps://puppetagent:636
+  openldap_url : ldap://puppetagent:389
+  openldap_connection_name : cn=admin,dc=wso2,dc=org
+  openldap_connection_password : password
+  openldap_user_searchbase : ou=users,dc=wso2,dc=org
+  openldap_group_searchbase : ou=groups,dc=wso2,dc=org

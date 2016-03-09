@@ -71,7 +71,7 @@
  	    -->
         <!--UserStoreManager class="org.wso2.carbon.user.core.ldap.ReadOnlyLDAPUserStoreManager">
             <Property name="TenantManager">org.wso2.carbon.user.core.tenant.CommonHybridLDAPTenantManager</Property>
-            <Property name="ConnectionURL">ldap://localhost:10389</Property>
+            <Property name="ConnectionURL"><%= @usermgt['readonly_ldap_url']%></Property>
             <Property name="ConnectionName">uid=admin,ou=system</Property>
             <Property name="ConnectionPassword">admin</Property>
             <Property name="UserSearchBase">ou=system</Property>
@@ -114,7 +114,7 @@
 	    -->
         <!--UserStoreManager class="org.wso2.carbon.user.core.ldap.ActiveDirectoryUserStoreManager">
             <Property name="TenantManager">org.wso2.carbon.user.core.tenant.CommonHybridLDAPTenantManager</Property>
-            <Property name="ConnectionURL">ldaps://10.100.1.100:636</Property> 
+            <Property name="ConnectionURL"><%= @usermgt['ad_url']%></Property>
             <Property name="ConnectionName">CN=admin,CN=Users,DC=WSO2,DC=Com</Property>
             <Property name="ConnectionPassword">A1b2c3d4</Property>
             <Property name="UserSearchBase">CN=Users,DC=WSO2,DC=Com</Property>
@@ -210,6 +210,49 @@
             <Property name="ReadTimeout"/>
             <Property name="RetryAttempts"/>
         </UserStoreManager>
+
+
+        <!-- Following is the configuration for Open LDAP-->
+        <!--UserStoreManager class="org.wso2.carbon.user.core.ldap.ReadWriteLDAPUserStoreManager">
+            <Property name="TenantManager">org.wso2.carbon.user.core.tenant.CommonHybridLDAPTenantManager</Property>
+            <Property name="ConnectionURL"><%= @usermgt['openldap_url']%></Property>
+            <Property name="Disabled">false</Property>
+            <Property name="ConnectionName"><%= @usermgt['openldap_connection_name']%></Property>
+            <Property name="ConnectionPassword"><%= @usermgt['openldap_connection_password']%></Property>
+            <Property name="passwordHashMethod">PLAIN_TEXT</Property>
+            <Property name="UserNameListFilter">(objectClass=person)</Property>
+        	<Property name="UserEntryObjectClass">inetOrgPerson</Property>
+            <Property name="UserSearchBase"><%= @usermgt['openldap_user_searchbase']%></Property>
+            <Property name="UserNameSearchFilter">(&amp;(objectClass=person)(uid=?))</Property>
+            <Property name="UserNameAttribute">uid</Property>
+        	<Property name="UsernameJavaRegEx">[a-zA-Z0-9._-|//]{3,30}$</Property>
+            <Property name="UsernameJavaScriptRegEx">^[\S]{3,30}$</Property>
+        	<Property name="RolenameJavaScriptRegEx">^[\S]{3,30}$</Property>
+            <Property name="RolenameJavaRegEx">[a-zA-Z0-9._-|//]{3,30}$</Property>
+            <Property name="PasswordJavaScriptRegEx">^[\S]{5,30}$</Property>
+        	<Property name="ReadGroups">true</Property>
+        	<Property name="WriteGroups">true</Property>
+        	<Property name="EmptyRolesAllowed">false</Property>
+            <Property name="GroupSearchBase"><%= @usermgt['openldap_group_searchbase']%></Property>
+            <Property name="GroupNameListFilter">(objectClass=groupOfNames)</Property>
+            <Property name="GroupEntryObjectClass">groupOfNames</Property>
+            <Property name="GroupNameSearchFilter">(&amp;(objectClass=groupOfNames)(cn=?))</Property>
+            <Property name="GroupNameAttribute">cn</Property>
+            <Property name="SharedGroupNameAttribute">cn</Property>
+            <Property name="SharedGroupSearchBase">ou=SharedGroups,dc=wso2,dc=org</Property>
+            <Property name="SharedGroupEntryObjectClass">groupOfNames</Property>
+            <Property name="SharedGroupNameListFilter">(objectClass=groupOfNames)</Property>
+            <Property name="SharedGroupNameSearchFilter">(&amp;(objectClass=groupOfNames)(cn=?))</Property>
+            <Property name="SharedTenantNameListFilter">(objectClass=organizationalUnit)</Property>
+            <Property name="SharedTenantNameAttribute">ou</Property>
+            <Property name="SharedTenantObjectClass">organizationalUnit</Property>
+            <Property name="MembershipAttribute">member</Property>
+            <Property name="UserRolesCacheEnabled">true</Property>
+        	<Property name="ReplaceEscapeCharactersAtUserLogin">true</Property>
+            <Property name="MaxRoleNameListLength">100</Property>
+            <Property name="MaxUserNameListLength">100</Property>
+            <Property name="SCIMEnabled">true</Property>
+        </UserStoreManager-->
 
         <AuthorizationManager class="org.wso2.carbon.user.core.authorization.JDBCAuthorizationManager">
             <Property name="AdminRoleManagementPermissions">/permission</Property>
